@@ -10,8 +10,11 @@ app.disable('x-powered-by')
 
 app.get('/movies', (req, res) => {
     const { genre } = req.query
+    console.log(genre)
     if (genre) {
-        const filteredMovies = movies.filter(movie => movie.genre.includes(genre))
+        const filteredMovies = movies.filter(
+            movie => movie.genre.some(g => g.toLowerCase() === genre.toLowerCase())
+        )
         return res.json(filteredMovies)
     }
     res.json(movies)

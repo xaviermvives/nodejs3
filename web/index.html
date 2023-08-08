@@ -15,6 +15,19 @@
             width: 320px;
             max-width: 100%;
         }
+        button{
+            margin:1rem 0 1rem 0;
+            padding:.5rem;
+            border:0;
+            background-color: black;
+            color:white;
+            border-radius:.4rem;
+        }
+        button:hover{
+            background-color: rgb(116, 113, 113);
+            color:rgb(11, 11, 11);
+            border-radius:.4rem;
+        }
     </style>
     <script type="module">
         fetch('http://localhost:3005/movies')
@@ -27,12 +40,30 @@
                     <h3>${movie.director}</h3>
                     <h3>${movie.year}</h3>
 
-                    <img src="${movie.poster}" alt="${movie.title}"
+                    <img src="${movie.poster}" alt="${movie.title}" /><br />
+                    <button>Eliminar</button>
                 <article>
             `
            }).join('')
 
            document.querySelector('main').innerHTML = html
+
+           document.addEventListener('click', e => {
+            if(e.target.matches('button')) {
+                const article = e.target.closest('article')
+                const id = article.dataset.id
+
+                fetch(`http://localhost:3005/movies/${id}`, {
+                    method: 'DELETE'
+                })
+                .then(res => res.json())
+                .then(res => {
+                    if(res.success) {
+                        article.remove()
+                    }
+                })
+            }
+           })
         })
     </script>
 </head>

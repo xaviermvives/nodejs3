@@ -10,7 +10,23 @@ app.disable('x-powered-by')
 
 app.use(express.json())
 
+const ACCEPTED_ORIGINS = [
+    'http://localhost:8080',
+    'http://localhost:3005',
+    'https://movies.com',
+    'http://midu.dev'
+
+]
+
 app.get('/movies', (req, res) => {
+    // res.header('Access-Control-Allow-Origin', '*')
+    const origin = req.header('origin')
+    // cuando la petición es del mismo ORIGIN
+    // http://localhost:1234 --> http://localhost:1234
+    // entonces no envia el header 'origin'
+    if (ACCEPTED_ORIGINS.includes(origin) || !origin) {
+        res.header('Access-Control-Allow-Origin', origin)
+    }
     const { genre } = req.query
     console.log(genre)
     if (genre) {

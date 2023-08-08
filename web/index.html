@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provar API REST</title>
+    <style>
+        article{
+            border: 1px solid #ccc;
+            padding:1eem;
+            margin-bottom: 1rem;
+        }
+        img{
+            height: auto;
+            width: 320px;
+            max-width: 100%;
+        }
+    </style>
+    <script type="module">
+        fetch('http://localhost:3005/movies')
+        .then(res => res.json())
+        .then(movies => {
+           const html = movies.map(movie => {
+            return `
+                <article data-id="${movie.id}">
+                    <h2>${movie.title}</h2>
+                    <h3>${movie.director}</h3>
+                    <h3>${movie.year}</h3>
+
+                    <img src="${movie.poster}" alt="${movie.title}"
+                <article>
+            `
+           }).join('')
+
+           document.querySelector('main').innerHTML = html
+        })
+    </script>
+</head>
+<body>
+    <main></main>
+</body>
+</html>

@@ -85,6 +85,19 @@ app.patch('/movies/:id', (req, res) => {
     return res.json(updatedMovie)
 })
 
+app.delete('/movies/:id', (req, res) => {
+    const { id } = req.params
+    const movieIndex = movies.findIndex(movie => movie.id === id)
+
+    if (movieIndex === -1) {
+        return res.status(404).json({ message: 'Movie not found' })
+    }
+
+    movies.splice(movieIndex, 1)
+
+    return res.json({ message: 'Movie deleted' })
+})
+
 const PORT = process.env.PORT ?? 3005
 
 app.listen(PORT, () => {

@@ -42,3 +42,6 @@ Content-Type: application/json
     "year": 1984
    
 }
+
+### Delete a movie
+DELETE http://localhost:3005/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
